@@ -1,16 +1,14 @@
-import { NgModule } from '@angular/core';
-import { ToolsComponent } from './tools.component';
+import {NgModule} from '@angular/core';
 
-
+import {ComponentsModule} from './modules/components/components.module';
 
 @NgModule({
-  declarations: [
-    ToolsComponent
-  ],
   imports: [
+    ComponentsModule
   ],
   exports: [
-    ToolsComponent
+  ],
+  declarations: [
   ]
 })
 export class ToolsModule { }
