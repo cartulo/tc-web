@@ -33,15 +33,6 @@
               "zone.js/testing"
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "projects/tools/**/*.ts",
-              "projects/tools/**/*.html"
-            ]
-          }
         }
       }
     },
@@ -139,15 +130,6 @@
             ],
             "scripts": []
           }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "projects/app-web/**/*.ts",
-              "projects/app-web/**/*.html"
-            ]
-          }
         }
       }
     },
@@ -179,15 +161,6 @@
             "polyfills": [
               "zone.js",
               "zone.js/testing"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "projects/ctx-relatorios/**/*.ts",
-              "projects/ctx-relatorios/**/*.html"
             ]
           }
         }

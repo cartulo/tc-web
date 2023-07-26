@@ -1,18 +1,18 @@
 import {NgModule} from '@angular/core';
 
-import {RelatorioDetalhadoComponent} from './pages/relatorio-detalhado/relatorio-detalhado.component';
+import {ComponentsModule} from 'projects/tools/src/lib/modules/components/components.module';
 
-const components = [
-  RelatorioDetalhadoComponent
-]
+import {CtxRelatoriosComponent} from './ctx-relatorios.component';
+import {RelatorioDetalhadoComponent} from './pages/relatorio-detalhado.component';
 
 @NgModule({
-  imports: [],
-  exports: [
-    ...components
+  imports: [
+    ComponentsModule
   ],
   declarations: [
-    ...components
-  ]
+    CtxRelatoriosComponent,
+    RelatorioDetalhadoComponent
+  ],
+  exports: []
 })
 export class CtxRelatoriosModule { }
