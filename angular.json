@@ -33,15 +33,6 @@
               "zone.js/testing"
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "projects/tools/**/*.ts",
-              "projects/tools/**/*.html"
-            ]
-          }
         }
       }
     },
@@ -139,13 +130,37 @@
             ],
             "scripts": []
           }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
+        }
+      }
+    },
+    "ctx-relatorios": {
+      "projectType": "library",
+      "root": "projects/ctx-relatorios",
+      "sourceRoot": "projects/ctx-relatorios/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "lintFilePatterns": [
-              "projects/app-web/**/*.ts",
-              "projects/app-web/**/*.html"
+            "project": "projects/ctx-relatorios/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ctx-relatorios/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ctx-relatorios/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ctx-relatorios/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
             ]
           }
         }
