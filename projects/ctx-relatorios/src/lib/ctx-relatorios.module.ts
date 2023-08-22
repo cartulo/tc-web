@@ -4,7 +4,7 @@ import {ComponentsModule} from 'projects/tools/src/lib/modules/components/compon
 import {CtxRelatoriosRoutingModule} from './ctx-relatorios-routing.module';
 
 import {CtxRelatoriosComponent} from './ctx-relatorios.component';
-import {RelatorioDetalhadoComponent} from './pages';
+import {ImagemDescricaoComponent, RelatorioDetalhadoComponent} from './pages';
 
 @NgModule({
   imports: [
@@ -13,7 +13,8 @@ import {RelatorioDetalhadoComponent} from './pages';
   ],
   declarations: [
     CtxRelatoriosComponent,
-    RelatorioDetalhadoComponent
+    RelatorioDetalhadoComponent,
+    ImagemDescricaoComponent
   ],
   exports: []
 })
