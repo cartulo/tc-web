@@ -1,0 +1,25 @@
+name: Production Deploy
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  production-deploy:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Build - Web
+      run: npm ci && npm run build app-web
+
+    - name: Deploy to Firebase Hosting
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TC_WEB_UNIP }}'
+          channelId: live
+          projectId: tc-web-unip
