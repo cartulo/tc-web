@@ -8,9 +8,6 @@ export class RelatorioDetalhadoComponent {
 
     constructor() { }
 
-    products = [
-        {code: 10, name: 'Dez'},
-        {code: 11, name: 'Eleven'}
-    ]
+
 
 }
