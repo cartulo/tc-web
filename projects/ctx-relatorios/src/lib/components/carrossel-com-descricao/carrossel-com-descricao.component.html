@@ -1,13 +1,13 @@
-<p-carousel [value]="products" [numVisible]="1" [numScroll]="1" [circular]="true">
-    <ng-template let-product pTemplate="item">
+<p-carousel [value]="infoDevs" [numVisible]="1" [numScroll]="1" [circular]="true">
+    <ng-template let-infoDev pTemplate="item">
         <div class="flex md:justify-content-center m-2">
             <div class="flex align-items-center justify-content-center font-bold m-2">
                 <p-image
-                    src="https://mario.wiki.gallery/images/thumb/8/81/NSMBU_Bubble_Baby_Yoshi_Artwork.png/1200px-NSMBU_Bubble_Baby_Yoshi_Artwork.png"
-                    alt="imagem exemplo" width="250"></p-image>
+                    src="../../../assets/{{ infoDev.imagem }}"
+                    [alt]="infoDev.imagemTextoAlternativo" width="250"></p-image>
             </div>
             <div class="flex align-items-center justify-content-center font-bold">
-                <p>Texto de exemplo</p>
+                <p>{{ infoDev.texto }}</p>
             </div>
         </div>
     </ng-template>
