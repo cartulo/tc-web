@@ -5,5 +5,6 @@ import {Component, Input} from '@angular/core';
     templateUrl: 'imagem-com-descricao.component.html'
 })
 export class ImagemComDescricaoComponent {
+    @Input() card: any;
     @Input() posicaoImagem: string;
 }

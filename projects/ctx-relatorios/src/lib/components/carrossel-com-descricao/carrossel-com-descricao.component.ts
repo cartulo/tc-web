@@ -1,18 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
     selector: 'ctx-relatorios-carrossel-com-descricao',
     templateUrl: './carrossel-com-descricao.component.html'
 })
-export class CarrosselComDescricaoComponent {
+export class CarrosselComDescricaoComponent implements OnInit {
+    @Input() infoDevs: any;
 
-    constructor() { }
-
-    products = [
-        {code: 10, name: 'Dez'},
-        {code: 11, name: 'Eleven'},
-        {code: 12, name: 'Two Elves'},
-        {code: 13, name: 'Yoshi'}
-    ]
+    constructor() {}
+    ngOnInit(): void {
+        console.log(this.infoDevs);
+    }
 
 }

@@ -1,4 +1,5 @@
-<ctx-relatorios-imagem-com-descricao [posicaoImagem]="'start'" />
-<ctx-relatorios-imagem-com-descricao [posicaoImagem]="'end'" />
-<ctx-relatorios-imagem-com-descricao [posicaoImagem]="'start'" />
-<ctx-relatorios-carrossel-com-descricao />
+<ng-container *ngFor="let card of cardsInformativos">
+    <ctx-relatorios-imagem-com-descricao [card]="card" [posicaoImagem]="card.posicao" />
+</ng-container>
+
+<ctx-relatorios-carrossel-com-descricao [infoDevs]="informacoesDesenvolvedores"/>
