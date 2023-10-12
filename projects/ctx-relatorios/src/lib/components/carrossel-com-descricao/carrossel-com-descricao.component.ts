@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'ctx-relatorios-carrossel-com-descricao',
@@ -6,7 +6,4 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class CarrosselComDescricaoComponent {
     @Input() infoDevs: any;
-
-    constructor() {}
-
 }

@@ -35,9 +35,10 @@ export class RelatorioDetalhadoComponent {
             imagemTextoAlternativo: 'Gilberto Junior'
         },
         {
-            texto: '',
-            imagem: '',
+            texto: 'Carol é uma pessoa que adora jogar videogame e tem um grande interesse em tecnologia. Sua curiosidade é evidente, pois está sempre em busca de novos conhecimentos e desafios. Sua natureza criativa se destaca, principalmente, pelo gosto em criar soluções inovadoras e expressar a criatividade de diversas maneiras.',
+            imagem: 'caroline.jpg',
             imagemTextoAlternativo: 'Caroline Carvalho'
         }
     ]
+
 }
