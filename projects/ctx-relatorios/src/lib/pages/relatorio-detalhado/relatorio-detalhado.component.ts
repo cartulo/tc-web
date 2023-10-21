@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
     selector: 'ctx-relatorios-detalhado',
     templateUrl: './relatorio-detalhado.component.html'
 })
-export class RelatorioDetalhadoComponent {
-    constructor() { }
-
+export class RelatorioDetalhadoComponent implements OnInit {
+    urlFull: string = 'http://aps-carol.x10.mx/aps/public/api';
     cardsInformativos = [
         {
             posicao: 'start',
@@ -41,4 +41,97 @@ export class RelatorioDetalhadoComponent {
         }
     ]
 
+    basicData: any;
+    basicOptions: any;
+    dados: any;
+
+    constructor(private http: HttpClient) {
+    }
+
+    ngOnInit() {
+        this.basicOptions = this.definirConfiguracoesGrafico();
+
+        this.http.get(`${this.urlFull}/solo`).subscribe((res: any) => {
+            let datasFormatadas = this.formatarDados(res.data);
+
+            this.dados = {
+                labels: datasFormatadas.map(data => data.dataIrrigacao),
+                datasets: [
+                    {
+                        label: 'Umidade',
+                        data: datasFormatadas.map(data => data.umidade),
+                        backgroundColor: ['rgba(39, 181, 245, 0.8)'],
+                        borderColor: ['rgba(39, 181, 245, 0.8)'],
+                        borderWidth: 1
+                    }
+                ]
+            }
+        });
+    }
+
+    formatarDados(dados): Solo[] {
+        let resultado = [];
+
+        dados.forEach(dado => {
+            let dataFormatada = new Solo();
+
+            const [data, hora] = dado.registro.split(' ');
+
+            const [ano, mes, dia] = data.split('-');
+            const [horas, minutos] = hora.split(':');
+
+            dataFormatada.dataIrrigacao = dia + '/' + mes + '/' + ano + ' às ' + horas + ':' + minutos;
+            dataFormatada.umidade = Number(dado.umidade);
+
+            resultado.push(dataFormatada);
+        });
+
+        return resultado;
+    }
+
+    definirConfiguracoesGrafico() {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+        let resultado = {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                }
+            }
+        };
+
+        return resultado;
+    }
+}
+
+export class Solo {
+    dataIrrigacao: string;
+    umidade: number;
 }

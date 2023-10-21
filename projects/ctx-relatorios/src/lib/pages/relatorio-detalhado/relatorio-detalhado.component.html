@@ -2,4 +2,8 @@
     <ctx-relatorios-imagem-com-descricao [card]="card" [posicaoImagem]="card.posicao" />
 </ng-container>
 
+<div class="card m-2">
+    <p-chart type="bar" [data]="dados" [options]="basicOptions" height="300px"></p-chart>
+</div>
+
 <ctx-relatorios-carrossel-com-descricao [infoDevs]="informacoesDesenvolvedores"/>
