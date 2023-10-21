@@ -49,7 +49,7 @@ export class RelatorioDetalhadoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.basicOptions = this.definirOpcoesBasicas();
+        this.basicOptions = this.definirConfiguracoesGrafico();
 
         this.http.get(`${this.urlFull}/solo`).subscribe((res: any) => {
             let datasFormatadas = this.formatarDados(res.data);
@@ -58,7 +58,7 @@ export class RelatorioDetalhadoComponent implements OnInit {
                 labels: datasFormatadas.map(data => data.dataIrrigacao),
                 datasets: [
                     {
-                        label: datasFormatadas.map(data => data.horaIrrigacao),
+                        label: 'Umidade',
                         data: datasFormatadas.map(data => data.umidade),
                         backgroundColor: ['rgba(39, 181, 245, 0.8)'],
                         borderColor: ['rgba(39, 181, 245, 0.8)'],
@@ -80,8 +80,7 @@ export class RelatorioDetalhadoComponent implements OnInit {
             const [ano, mes, dia] = data.split('-');
             const [horas, minutos] = hora.split(':');
 
-            dataFormatada.dataIrrigacao = dia + '/' + mes + '/' + ano;
-            dataFormatada.horaIrrigacao = horas + ':' + minutos;
+            dataFormatada.dataIrrigacao = dia + '/' + mes + '/' + ano + ' às ' + horas + ':' + minutos;
             dataFormatada.umidade = Number(dado.umidade);
 
             resultado.push(dataFormatada);
@@ -90,7 +89,7 @@ export class RelatorioDetalhadoComponent implements OnInit {
         return resultado;
     }
 
-    definirOpcoesBasicas() {
+    definirConfiguracoesGrafico() {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
@@ -134,6 +133,5 @@ export class RelatorioDetalhadoComponent implements OnInit {
 
 export class Solo {
     dataIrrigacao: string;
-    horaIrrigacao: string;
     umidade: number;
 }
