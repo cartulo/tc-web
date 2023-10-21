@@ -17,7 +17,7 @@ export class RelatorioDetalhadoComponent implements OnInit {
         {
             posicao: 'end',
             texto: 'Aprofunde-se na tecnologia por trás da estação de irrigação automática. Saiba como projetamos e montamos um sistema de irrigação que utiliza sensores de umidade do solo e dados climáticos para fornecer água de maneira precisa. Descubra como coletamos dados de campo e analisamos os resultados para otimizar o desempenho do sistema.',
-            imagem: 'card2.png',
+            imagem: 'card2.jpg',
             imagemTextoAlternativo: 'Projeto Inteligente: A Estação de Irrigação Automática'
         },
         {
