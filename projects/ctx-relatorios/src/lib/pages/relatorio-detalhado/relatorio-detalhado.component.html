@@ -2,8 +2,25 @@
     <ctx-relatorios-imagem-com-descricao [card]="card" [posicaoImagem]="card.posicao" />
 </ng-container>
 
-<div class="card m-2">
-    <p-chart type="bar" [data]="dados" [options]="basicOptions" height="300px"></p-chart>
+<div class="flex justify-content-center">
+    <div class="card flex-1 ml-2 mr-1 my-1">
+        <h6>Quantidade de acionamentos da bomba:</h6>
+        <h2>{{quantidadeAcionamentosMes}}</h2>
+        <h6>Vezes no último mês</h6>
+        <p>Último registro realizado em: {{dadosBomba.dataRegistro}}</p>
+    </div>
+    <div class="card flex-1 mr-1 ml-1 my-1">
+        <h6>Estado atual da bomba:</h6>
+        <h2>{{ dadosBomba.tipoAcao }}</h2>
+    </div>
+    <div class="card flex-1 mr-2 ml-1 my-1">
+        <h6>Estado atual do solo:</h6>
+        <h2>{{ ultimoRegistroSolo.estado }}</h2>
+    </div>
 </div>
 
-<ctx-relatorios-carrossel-com-descricao [infoDevs]="informacoesDesenvolvedores"/>
+<div class="card m-2">
+    <p-chart type="bar" [data]="dadosSolo" [options]="basicOptions" height="300px"></p-chart>
+</div>
+
+<ctx-relatorios-carrossel-com-descricao [infoDevs]="informacoesDesenvolvedores" />
