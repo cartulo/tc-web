@@ -6,7 +6,7 @@ import {Component, OnInit} from '@angular/core';
     templateUrl: './relatorio-detalhado.component.html'
 })
 export class RelatorioDetalhadoComponent implements OnInit {
-    urlFull: string = 'http://aps-carol.x10.mx/aps/public/api';
+    urlFull: string = 'https://aps-carol.x10.mx/aps/public/api';
     cardsInformativos = [
         {
             posicao: 'start',
