@@ -43,7 +43,11 @@ export class RelatorioDetalhadoComponent implements OnInit {
 
     basicData: any;
     basicOptions: any;
-    dados: any;
+    dadosSolo: any;
+    dadosBomba: any;
+    quantidadeAcionamentosMes: number;
+    mesLeituraAcionamentos: string;
+    ultimoRegistroSolo: Solo;
 
     constructor(private http: HttpClient) {
     }
@@ -51,15 +55,20 @@ export class RelatorioDetalhadoComponent implements OnInit {
     ngOnInit() {
         this.basicOptions = this.definirConfiguracoesGrafico();
 
-        this.http.get(`${this.urlFull}/solo`).subscribe((res: any) => {
-            let datasFormatadas = this.formatarDados(res.data);
+        this.carregarDadosSolo();
+        this.carregarUltimoRegistroBomba();
+    }
 
-            this.dados = {
-                labels: datasFormatadas.map(data => data.dataIrrigacao),
+    private carregarDadosSolo() {
+        this.http.get(`${this.urlFull}/solo`).subscribe((res: any) => {
+            let dadosFormatados = this.formatarDadosSolo(res);
+
+            this.dadosSolo = {
+                labels: dadosFormatados.map(data => data.dataIrrigacao),
                 datasets: [
                     {
                         label: 'Umidade',
-                        data: datasFormatadas.map(data => data.umidade),
+                        data: dadosFormatados.map(data => data.umidade),
                         backgroundColor: ['rgba(39, 181, 245, 0.8)'],
                         borderColor: ['rgba(39, 181, 245, 0.8)'],
                         borderWidth: 1
@@ -69,27 +78,82 @@ export class RelatorioDetalhadoComponent implements OnInit {
         });
     }
 
-    formatarDados(dados): Solo[] {
+    private formatarDadosSolo(dados): Solo[] {
         let resultado = [];
 
         dados.forEach(dado => {
-            let dataFormatada = new Solo();
+            let entidade = new Solo();
+            let dataFormatada = this.formatarDatas(dado.registro);
 
-            const [data, hora] = dado.registro.split(' ');
+            if (dado.umidade < 5 || dado.umidade > 95) return;
 
-            const [ano, mes, dia] = data.split('-');
-            const [horas, minutos] = hora.split(':');
+            entidade.id = dado.id_solo
+            entidade.estado = dado.estado.toUpperCase()
+            entidade.dataIrrigacao = `${dataFormatada[0]} às ${dataFormatada[1]}`
+            entidade.mesLeitura = dataFormatada[2].getMonth()
+            entidade.umidade = Number(dado.umidade);
 
-            dataFormatada.dataIrrigacao = dia + '/' + mes + '/' + ano + ' às ' + horas + ':' + minutos;
-            dataFormatada.umidade = Number(dado.umidade);
-
-            resultado.push(dataFormatada);
+            resultado.push(entidade);
         });
+
+        let ultimoIndice = resultado.length - 1;
+        this.ultimoRegistroSolo = resultado[ultimoIndice];
+
+        resultado = resultado.slice(ultimoIndice - 14);
+
+        this.obterDadosAcionamentoBomba(resultado);
 
         return resultado;
     }
 
-    definirConfiguracoesGrafico() {
+    private obterDadosAcionamentoBomba(dados) {
+        const hoje = new Date();
+        const mesAtual = hoje.getMonth();
+
+        var meses = [
+            "Janeiro",
+            "Fevereiro",
+            "Março",
+            "Abril",
+            "Maio",
+            "Junho",
+            "Julho",
+            "Agosto",
+            "Setembro",
+            "Outubro",
+            "Novembro",
+            "Dezembro"
+        ];
+
+        this.quantidadeAcionamentosMes = dados.filter(dado => dado.mesLeitura == mesAtual).length;
+        this.mesLeituraAcionamentos = meses[mesAtual];
+    }
+
+    private carregarUltimoRegistroBomba() {
+        let resultado = new Bomba();
+
+        this.http.get(`${this.urlFull}/bomba/last`).subscribe((res: any) => {
+            let dataFormatada = this.formatarDatas(res.registro);
+
+            resultado.irrigacaoId = res.id_irrigacao
+            resultado.tipoAcao = res.tipo_acao == 1 ? 'LIGADO' : 'DESLIGADO'
+            resultado.dataRegistro = `${dataFormatada[0]} às ${dataFormatada[1]}`
+        })
+
+        this.dadosBomba = resultado;
+    }
+
+    private formatarDatas(value): any[] {
+        const [data, hora] = value.split(' ');
+        const dataJs = new Date(data);
+
+        const [ano, mes, dia] = data.split('-');
+        const [horas, minutos] = hora.split(':');
+
+        return [`${dia}/${mes}/${ano}`, `${horas}:${minutos}`, dataJs];
+    }
+
+    private definirConfiguracoesGrafico() {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
@@ -132,6 +196,15 @@ export class RelatorioDetalhadoComponent implements OnInit {
 }
 
 export class Solo {
+    id: string;
+    estado: string;
     dataIrrigacao: string;
+    mesLeitura: number;
     umidade: number;
+}
+
+export class Bomba {
+    irrigacaoId: string;
+    tipoAcao: string;
+    dataRegistro: string;
 }
