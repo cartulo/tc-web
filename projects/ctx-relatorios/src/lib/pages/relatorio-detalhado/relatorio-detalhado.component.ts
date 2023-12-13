@@ -85,7 +85,7 @@ export class RelatorioDetalhadoComponent implements OnInit {
             let entidade = new Solo();
             let dataFormatada = this.formatarDatas(dado.registro);
 
-            if (dado.umidade < 5 || dado.umidade > 95) return;
+            if (dado.umidade < 5) return;
 
             entidade.id = dado.id_solo
             entidade.estado = dado.estado.toUpperCase()
