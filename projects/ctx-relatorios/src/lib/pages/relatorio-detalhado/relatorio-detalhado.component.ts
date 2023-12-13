@@ -80,12 +80,16 @@ export class RelatorioDetalhadoComponent implements OnInit {
 
     private formatarDadosSolo(dados): Solo[] {
         let resultado = [];
+        let ultimoIndice: number;
 
         dados.forEach(dado => {
             let entidade = new Solo();
             let dataFormatada = this.formatarDatas(dado.registro);
 
-            if (dado.umidade < 5) return;
+            ultimoIndice = resultado.length - 1;
+            this.ultimoRegistroSolo = resultado[ultimoIndice];
+
+            if (dado.umidade < 5 || dado.umidade > 95) return;
 
             entidade.id = dado.id_solo
             entidade.estado = dado.estado.toUpperCase()
@@ -96,10 +100,7 @@ export class RelatorioDetalhadoComponent implements OnInit {
             resultado.push(entidade);
         });
 
-        let ultimoIndice = resultado.length - 1;
-        this.ultimoRegistroSolo = resultado[ultimoIndice];
-
-        this.obterDadosAcionamentoBomba(resultado);
+        this.obterDadosAcionamentoBomba(dados);
 
         resultado = resultado.slice(ultimoIndice - 14);
 
@@ -109,6 +110,13 @@ export class RelatorioDetalhadoComponent implements OnInit {
     private obterDadosAcionamentoBomba(dados) {
         const hoje = new Date();
         const mesAtual = hoje.getMonth();
+        let mesesLeitura = [];
+
+        dados.forEach(dado => {
+            let dataFormatada = this.formatarDatas(dado.registro);
+
+            mesesLeitura.push(dataFormatada[2].getMonth());
+        })
 
         var meses = [
             "Janeiro",
@@ -125,7 +133,7 @@ export class RelatorioDetalhadoComponent implements OnInit {
             "Dezembro"
         ];
 
-        this.quantidadeAcionamentosMes = dados.filter(dado => dado.mesLeitura == mesAtual).length;
+        this.quantidadeAcionamentosMes = mesesLeitura.filter(mes => mes == mesAtual).length;
         this.mesLeituraAcionamentos = meses[mesAtual];
     }
 
