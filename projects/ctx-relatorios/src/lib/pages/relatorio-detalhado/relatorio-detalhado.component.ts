@@ -99,9 +99,9 @@ export class RelatorioDetalhadoComponent implements OnInit {
         let ultimoIndice = resultado.length - 1;
         this.ultimoRegistroSolo = resultado[ultimoIndice];
 
-        resultado = resultado.slice(ultimoIndice - 14);
-
         this.obterDadosAcionamentoBomba(resultado);
+
+        resultado = resultado.slice(ultimoIndice - 14);
 
         return resultado;
     }
